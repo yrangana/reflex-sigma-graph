@@ -16,7 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Customizable styling and theming
 - Support for node and edge labels
 - Demo application with sample usage
+- **uv support** for faster installation and development
+
+### Changed
+- Simplified installation using `frontend_packages` in `rxconfig.py`
+- No manual npm installation required
 
 ### Known Issues
-- Requires manual npm package installation in `.web` directory
-- Uses runtime file copying for component resolution
+- Package not yet published to PyPI (use development installation)

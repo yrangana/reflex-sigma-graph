@@ -17,6 +17,8 @@ A Sigma.js graph visualization component for [Reflex](https://reflex.dev), enabl
 ## Installation
 
 > **Note:** This package is not yet published to PyPI. Use the development installation for now.
+> 
+> **Tip:** We recommend using [uv](https://github.com/astral-sh/uv) for faster installation and better dependency management.
 
 ### From PyPI (Coming Soon)
 
@@ -30,12 +32,27 @@ pip install reflex-sigma-graph
 
 For now, install directly from the repository:
 
+**With uv (recommended - faster):**
 ```bash
 # Clone the repository
 git clone https://github.com/yrangana/reflex-sigma-graph.git
 cd reflex-sigma-graph
 
-# Install in editable mode
+# Create virtual environment and install
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install -e .
+```
+
+**With pip:**
+```bash
+# Clone the repository
+git clone https://github.com/yrangana/reflex-sigma-graph.git
+cd reflex-sigma-graph
+
+# Create virtual environment and install
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -e .
 ```
 

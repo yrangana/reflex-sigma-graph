@@ -4,6 +4,23 @@ Thank you for your interest in contributing to reflex-sigma-graph!
 
 ## Development Setup
 
+**With uv (recommended - faster):**
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yrangana/reflex-sigma-graph.git
+cd reflex-sigma-graph
+```
+
+2. Create a virtual environment and install:
+```bash
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install -e .
+```
+
+**With pip:**
+
 1. Clone the repository:
 ```bash
 git clone https://github.com/yrangana/reflex-sigma-graph.git
@@ -14,14 +31,10 @@ cd reflex-sigma-graph
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
-
-3. Install in development mode:
-```bash
 pip install -e .
 ```
 
-4. Test with the demo app:
+3. Test with the demo app:
 ```bash
 cd sigma_graph_demo
 reflex run
