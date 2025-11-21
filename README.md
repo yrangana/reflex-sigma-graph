@@ -26,8 +26,6 @@ Once published, you'll be able to install with:
 pip install reflex-sigma-graph
 ```
 
-The required npm packages should be installed automatically via the `[tool.reflex] frontend_packages` configuration.
-
 ### Development Installation (Current)
 
 For now, install directly from the repository:
@@ -41,16 +39,9 @@ cd reflex-sigma-graph
 pip install -e .
 ```
 
-**Important:** With editable installs, you currently need to manually install the npm packages in your app's `.web` directory:
+### Frontend Dependencies
 
-```bash
-cd your-app/.web
-npm install @react-sigma/core@5.0.4 sigma@3.0.2 graphology@0.26.0 \
-  graphology-layout-forceatlas2@0.10.1 graphology-layout-noverlap@0.4.2 \
-  @sigma/edge-curve@3.1.0 graphology-shortest-path@2.0.2
-```
-
-Alternatively, you can add the packages to your app's `rxconfig.py`:
+Add the required npm packages to your app's `rxconfig.py`:
 
 ```python
 import reflex as rx
@@ -68,6 +59,8 @@ config = rx.Config(
     ]
 )
 ```
+
+Reflex will automatically install these packages when you run `reflex run`.
 
 ## Quick Start
 
@@ -207,7 +200,7 @@ def index():
 ## Troubleshooting
 
 ### Graph not rendering
-1. Ensure npm packages are installed in `.web` directory
+1. Ensure `frontend_packages` are configured in your `rxconfig.py`
 2. Check browser console for errors
 3. Verify graph data format is correct
 
