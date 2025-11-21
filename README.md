@@ -16,19 +16,57 @@ A Sigma.js graph visualization component for [Reflex](https://reflex.dev), enabl
 
 ## Installation
 
+> **Note:** This package is not yet published to PyPI. Use the development installation for now.
+
+### From PyPI (Coming Soon)
+
+Once published, you'll be able to install with:
+
 ```bash
 pip install reflex-sigma-graph
 ```
 
-### Important: Frontend Dependencies
+The required npm packages should be installed automatically via the `[tool.reflex] frontend_packages` configuration.
 
-After installing the package, you need to install the required npm packages in your project's `.web` directory:
+### Development Installation (Current)
+
+For now, install directly from the repository:
 
 ```bash
-cd .web
+# Clone the repository
+git clone https://github.com/yrangana/reflex-sigma-graph.git
+cd reflex-sigma-graph
+
+# Install in editable mode
+pip install -e .
+```
+
+**Important:** With editable installs, you currently need to manually install the npm packages in your app's `.web` directory:
+
+```bash
+cd your-app/.web
 npm install @react-sigma/core@5.0.4 sigma@3.0.2 graphology@0.26.0 \
   graphology-layout-forceatlas2@0.10.1 graphology-layout-noverlap@0.4.2 \
   @sigma/edge-curve@3.1.0 graphology-shortest-path@2.0.2
+```
+
+Alternatively, you can add the packages to your app's `rxconfig.py`:
+
+```python
+import reflex as rx
+
+config = rx.Config(
+    app_name="your_app",
+    frontend_packages=[
+        "@react-sigma/core@5.0.4",
+        "@sigma/edge-curve@3.1.0",
+        "sigma@3.0.2",
+        "graphology@0.26.0",
+        "graphology-layout-forceatlas2@0.10.1",
+        "graphology-layout-noverlap@0.4.2",
+        "graphology-shortest-path@2.0.2",
+    ]
+)
 ```
 
 ## Quick Start
