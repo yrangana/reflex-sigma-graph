@@ -2,7 +2,7 @@
 
 A Sigma.js graph visualization component for [Reflex](https://reflex.dev), enabling interactive network graph visualizations in your Reflex applications.
 
-![Demo Screenshot](assets/screenshots/demo_main_view.png)
+![Interactive Graph Demo](assets/screenshots/demo.webp)
 
 ## Features
 
