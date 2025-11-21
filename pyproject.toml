@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reflex-sigma-graph"
+version = "0.1.0"
+description = "Sigma.js graph visualization component for Reflex"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "Yasiru Rangana", email = "yrangana@gmail.com" }]
+keywords = ["reflex", "sigma", "graph", "visualization", "network", "knowledge-graph"]
+
+dependencies = ["reflex>=0.8.20"]
+
+classifiers = ["Development Status :: 4 - Beta"]
+
+[project.urls]
+Homepage = "https://github.com/yrangana/reflex-sigma-graph"
+
+[project.optional-dependencies]
+dev = ["build", "twine"]
+
+[tool.setuptools.packages.find]
+where = ["custom_components"]
+
+[tool.reflex]
+frontend_packages = [
+    "@react-sigma/core@5.0.4",
+    "@sigma/edge-curve@3.1.0",
+    "sigma@3.0.2",
+    "graphology@0.26.0",
+    "graphology-layout-forceatlas2@0.10.1",
+    "graphology-layout-noverlap@0.4.2",
+    "graphology-shortest-path@2.0.2",
+]
