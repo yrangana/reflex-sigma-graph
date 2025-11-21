@@ -16,14 +16,16 @@ A Sigma.js graph visualization component for [Reflex](https://reflex.dev), enabl
 
 ## Installation
 
-> **Note:** This package is not yet published to PyPI. Use the development installation for now.
-> 
 > **Tip:** We recommend using [uv](https://github.com/astral-sh/uv) for faster installation and better dependency management.
 
-### From PyPI (Coming Soon)
+### From PyPI
 
-Once published, you'll be able to install with:
+**With uv (recommended - faster):**
+```bash
+uv pip install reflex-sigma-graph
+```
 
+**With pip:**
 ```bash
 pip install reflex-sigma-graph
 ```
