@@ -72,6 +72,84 @@ reflex-sigma-graph/
 ## Testing
 
 Currently, testing is done manually with the demo app. We welcome contributions to add automated testing!
+4. Run the linter:
+```bash
+ruff check .
+```
+
+## Technical Implementation Notes
+
+### How This Component Differs from Standard Reflex Components
+
+This component uses a **non-standard approach** to resolve JSX files due to Vite build constraints. Understanding these differences is important for maintenance and troubleshooting.
+
+#### Standard Reflex Component Approach
+
+Typically, Reflex custom components:
+1. Use `reflex component init` to scaffold the project
+2. Place JSX files in the package directory
+3. Reference components with just the module name in the `library` attribute
+4. Build with `reflex component build` to generate type stubs and package metadata
+5. Vite automatically resolves component imports from `node_modules`
+
+**Example:**
+```python
+class MyComponent(rx.Component):
+    library = "my-component"  # Simple name, resolved from node_modules
+    tag = "MyComponent"
+```
+
+#### Our Approach (reflex-sigma-graph)
+
+Due to Vite's inability to resolve our local JSX files from the package, we use:
+
+**1. Runtime File Copying (`ensure_custom_component`)**
+```python
+def ensure_custom_component():
+    """Copy JSX files to .web/utils/ at runtime"""
+    # Copies SigmaGraphWrapper.jsx and SigmaGraphViewer.jsx
+    # to the running app's .web directory
+```
+
+**2. Relative Path in Library Attribute**
+```python
+class SigmaGraphViewer(rx.Component):
+    library = "../../utils/SigmaGraphWrapper.jsx"  # Relative path to copied file
+    tag = "SigmaGraphViewer"
+```
+
+**3. Standard Python Build Instead of `reflex component build`**
+- We use `python -m build` instead of `reflex component build`
+- `reflex component build` fails with `ModuleNotFoundError: No module named 'custom_components'`
+- The standard build still creates a valid, installable package
+
+#### Why This Approach?
+
+**The Problem:**
+- Vite (Reflex's frontend bundler) couldn't resolve our local JSX component files
+- Standard `library = "reflex-sigma-graph"` caused Vite to look in `node_modules`
+- Our JSX files aren't npm packages, so this failed
+
+**The Solution:**
+- Copy JSX files to `.web/utils/` at runtime (before app starts)
+- Use a relative path that Vite can resolve from the generated route files
+- This works but deviates from Reflex conventions
+
+#### Known Limitations
+
+- ⚠️ JSX files are copied on every app start (minimal overhead)
+- ⚠️ Cannot use `reflex component build` (use `python -m build` instead)
+- ⚠️ Type stub generation may not work as expected
+- ⚠️ Different from examples in Reflex custom component documentation
+
+#### Future Improvements
+
+To align with standard Reflex components, we could:
+1. Investigate proper Vite configuration for local JSX resolution
+2. Fix the `reflex component build` module resolution issue
+3. Potentially wrap the component differently to avoid runtime copying
+
+For now, the current approach **works reliably** and users can install and use the package without issues.
 
 ## Submitting Changes
 
