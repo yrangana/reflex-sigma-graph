@@ -23,7 +23,7 @@ Homepage = "https://github.com/yrangana/reflex-sigma-graph"
 dev = ["build", "twine"]
 
 [tool.setuptools.packages.find]
-where = ["custom_components"]
+where = ["."]
 
 [tool.reflex]
 frontend_packages = [

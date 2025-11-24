@@ -101,55 +101,70 @@ class MyComponent(rx.Component):
 
 #### Our Approach (reflex-sigma-graph)
 
-Due to Vite's inability to resolve our local JSX files from the package, we use:
+~~Due to Vite's inability to resolve our local JSX files from the package, we use:~~ **[UPDATED]** As of the latest version, this component now follows standard Reflex conventions:
 
-**1. Runtime File Copying (`ensure_custom_component`)**
+**1. Standard Package Structure**
+```python
+# Component lives at top-level reflex_sigma_graph/ package
+reflex-sigma-graph/
+├── reflex_sigma_graph/          # Main package (not nested under custom_components)
+│   ├── __init__.py
+│   ├── sigma_graph.py          # Component definition
+│   ├── sigma_graph.pyi         # Generated type stubs
+│   ├── SigmaGraphViewer.jsx
+│   └── SigmaGraphWrapper.jsx
+└── pyproject.toml
+```
+
+**2. Runtime File Copying (Backward Compatibility)**
 ```python
 def ensure_custom_component():
     """Copy JSX files to .web/utils/ at runtime"""
+    # Still used for backward compatibility and robustness
     # Copies SigmaGraphWrapper.jsx and SigmaGraphViewer.jsx
     # to the running app's .web directory
 ```
 
-**2. Relative Path in Library Attribute**
+**3. Relative Path in Library Attribute**
 ```python
 class SigmaGraphViewer(rx.Component):
     library = "../../utils/SigmaGraphWrapper.jsx"  # Relative path to copied file
     tag = "SigmaGraphViewer"
 ```
 
-**3. Standard Python Build Instead of `reflex component build`**
-- We use `python -m build` instead of `reflex component build`
-- `reflex component build` fails with `ModuleNotFoundError: No module named 'custom_components'`
-- The standard build still creates a valid, installable package
+**4. ~~Standard Python Build Instead of~~ Full `reflex component build` Support** ✅
+- ✅ **Now supports `reflex component build`** (generates `.pyi` type stubs)
+- ✅ Compatible with standard Reflex component workflows
+- Package structure follows Reflex conventions (top-level package name matches project name)
 
 #### Why This Approach?
 
 **The Problem:**
 - Vite (Reflex's frontend bundler) couldn't resolve our local JSX component files
-- Standard `library = "reflex-sigma-graph"` caused Vite to look in `node_modules`
+- Standard `library = \"reflex-sigma-graph\"` caused Vite to look in `node_modules`
 - Our JSX files aren't npm packages, so this failed
 
 **The Solution:**
-- Copy JSX files to `.web/utils/` at runtime (before app starts)
+- ~~Copy JSX files to `.web/utils/` at runtime (before app starts)~~ **[UPDATED]**
+- Package structure now matches Reflex expectations (top-level `reflex_sigma_graph` package)
 - Use a relative path that Vite can resolve from the generated route files
-- This works but deviates from Reflex conventions
+- This works ~~but deviates from Reflex conventions~~ **and now follows Reflex conventions** ✅
 
-#### Known Limitations
+#### ~~Known Limitations~~ Current Status
 
-- ⚠️ JSX files are copied on every app start (minimal overhead)
-- ⚠️ Cannot use `reflex component build` (use `python -m build` instead)
-- ⚠️ Type stub generation may not work as expected
-- ⚠️ Different from examples in Reflex custom component documentation
+- ✅ **Fixed:** Can now use `reflex component build` successfully
+- ✅ **Fixed:** Type stub generation (`.pyi` files) now works as expected
+- ✅ **Fixed:** Package structure now matches standard Reflex component examples
+- ⚠️ Still uses runtime file copying for robustness (minimal overhead)
 
-#### Future Improvements
+#### ~~Future Improvements~~ Recent Improvements ✅
 
-To align with standard Reflex components, we could:
-1. Investigate proper Vite configuration for local JSX resolution
-2. Fix the `reflex component build` module resolution issue
-3. Potentially wrap the component differently to avoid runtime copying
+~~To align with standard Reflex components, we could:~~
+1. ✅ ~~Investigate proper Vite configuration for local JSX resolution~~ **DONE:** Restructured to top-level package
+2. ✅ ~~Fix the `reflex component build` module resolution issue~~ **DONE:** Now works successfully
+3. ⏳ Potentially remove runtime copying workaround in future versions
 
-For now, the current approach **works reliably** and users can install and use the package without issues.
+~~For now,~~ The current approach **works reliably**, follows Reflex conventions, and users can install and use the package without issues.
 
 ## Submitting Changes
 

@@ -1,1 +1,1 @@
-recursive-include custom_components *.jsx *.js *.css
+recursive-include reflex_sigma_graph *.jsx *.js *.css
